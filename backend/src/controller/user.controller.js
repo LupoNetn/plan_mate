@@ -1,4 +1,5 @@
 import { db } from "../db/db.js";
+import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs";
 import { signAccessToken, signRefreshToken } from "../utils/utils.js";
 
@@ -87,16 +88,18 @@ export const logInUser = async (req, res) => {
 export const refreshUserToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refresh_token;
+    
 
     if (!refreshToken) {
       return res.status(401).json({ message: "No refresh token provided" });
     }
-
+   
     jwt.verify(
       refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
+      process.env.JWT_REFRESH_SECRET,
       async (err, payload) => {
         if (err) {
+          console.log(err)
           return res.status(403).json({ message: "Invalid refresh token" });
         }
 

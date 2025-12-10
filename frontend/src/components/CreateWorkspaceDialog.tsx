@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Loader2, Plus, X } from "lucide-react";
 import toast from "react-hot-toast";
+import { createWorkspace } from "../services/workspaceService";
 
 interface CreateWorkspaceDialogProps {
   closeDialog: () => void;
@@ -26,7 +27,7 @@ const CreateWorkspaceDialog = ({ closeDialog }: CreateWorkspaceDialogProps) => {
     setLoading(true);
 
     try {
-      // Here you can call your API to create a workspace
+      await createWorkspace(formData)
       console.log("Creating workspace...", formData);
       toast.success("Workspace created successfully!");
       setFormData({ name: "", description: "" });

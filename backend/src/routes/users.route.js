@@ -6,7 +6,7 @@ const router = Router()
 
 router.post('/sign-up', signUpUser)
 router.post('/log-in', logInUser)
-router.post('/refresh',refreshUserToken)
+router.get('/refresh-token',refreshUserToken)
 router.get('/validate-me',authMiddleware, validateUser)
 
 

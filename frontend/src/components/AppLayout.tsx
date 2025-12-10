@@ -11,7 +11,6 @@ import { Loader2 } from 'lucide-react'
 const AppLayout = () => {
   const setUser = useAuthStore((state) => state.setUser)
   const user = useAuthStore((state) => state.user)
-  const accessToken = localStorage.getItem("accessToken");
   const [loading,setLoading] = useState(true)
  
  useEffect(() => {
