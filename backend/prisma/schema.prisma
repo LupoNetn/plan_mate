@@ -1,0 +1,109 @@
+// Prisma schema for Project Management Platform
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// ---------------------------------------------
+// ENUMS
+// ---------------------------------------------
+
+// User roles for the platform (Admin or Normal User)
+enum user_role {
+  ADMIN
+  USER
+}
+
+// ---------------------------------------------
+// MODELS
+// ---------------------------------------------
+
+model User {
+  id        String        @id @default(cuid())
+  name      String        @db.VarChar(300)
+  username  String        @unique @db.VarChar(150)
+  email     String        @unique @db.VarChar(254)
+  password  String        @db.VarChar(300)
+  role      user_role     @default(USER)
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  // RELATIONSHIPS
+  workspaces Workspace[]  @relation("WorkspaceOwner")
+  projects   Project[]    @relation("ProjectOwner")
+  tasks      Task[]       @relation("TaskAssignee")
+}
+
+// ---------------------------------------------
+// Workspace Model
+// Represents a collection/group owned by a user
+// ---------------------------------------------
+
+model Workspace {
+  id          String       @id @default(cuid())
+  name        String       @db.VarChar(300)
+  description String?      // optional long description
+
+  // Foreign Key — workspace owner
+  ownerId     String
+  owner       User         @relation("WorkspaceOwner", fields: [ownerId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // A workspace contains many projects
+  projects    Project[]
+}
+
+// ---------------------------------------------
+// Project Model
+// A project belongs to a workspace and an owner
+// ---------------------------------------------
+
+model Project {
+  id          String       @id @default(cuid())
+  name        String       @db.VarChar(300)
+  description String?
+
+  workspaceId String
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id])
+
+  ownerId     String
+  owner       User         @relation("ProjectOwner", fields: [ownerId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // A project contains many tasks
+  tasks       Task[]
+}
+
+// ---------------------------------------------
+// Task Model
+// Represents an individual task inside a project
+// ---------------------------------------------
+
+model Task {
+  id          String       @id @default(cuid())
+  name        String       @db.VarChar(350)
+
+  projectId   String
+  project     Project      @relation(fields: [projectId], references: [id])
+
+  assigneeId  String?
+  assignee    User?        @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  deadline    DateTime?    // optional deadline
+  completed   Boolean      @default(false)
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
