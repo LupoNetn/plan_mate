@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 import userRouter from './routes/users.route.js'
+import workspaceRouter from './routes/workspaces.route.js'
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 //routes
 //endpoint - http://localhost:8080/
 app.use('/users', userRouter)
+app.use('/workspaces', workspaceRouter)
 
 
 app.listen(PORT, () => {
