@@ -54,7 +54,7 @@ export const logInUser = async (req, res) => {
     const userExists = await db.user.findUnique({
       where: { email },
     });
-   const match = await bcrypt.compare(password, userExists.password);
+    const match = await bcrypt.compare(password, userExists.password);
 
     if (!userExists || !match) {
       return res.status(400).json({
@@ -102,9 +102,7 @@ export const refreshUserToken = async (req, res) => {
 
         const userId = payload.id;
 
-
-        const newAccessToken = signAccessToken({ id: userId })
-
+        const newAccessToken = signAccessToken({ id: userId });
 
         return res.json({
           accessToken: newAccessToken,
@@ -114,5 +112,24 @@ export const refreshUserToken = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const validateUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await db.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User no longer exists" });
+    }
+
+    res.json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 };

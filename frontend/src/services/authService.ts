@@ -50,3 +50,9 @@ export const login = async ({email,password}: LogInParams): Promise<LogInRespons
     })
     return res.data
 }
+
+export const validateUser = async () => {
+  const res = await api.get('/users/validate-me')
+
+  return res.data
+}

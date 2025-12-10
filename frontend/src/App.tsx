@@ -10,6 +10,7 @@ import Signup from './components/auth/Signup'
 import Login from './components/auth/Login'
 import ScrollToTop from './components/ScrollToTop'
 import { Toaster } from "react-hot-toast";
+import CreateWorkspace from './pages/CreateWorkspace'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
          <Route index element={<Signup />}/>
          <Route path='login' element={<Login />} />
         </Route>
+        <Route path='/create-workspace' element={<CreateWorkspace />}/>
         <Route path='/' element={<AppLayout />}>
           <Route index element={<Dashboard />}/>
           <Route path='/my-tasks' element={<MyTasks />} />

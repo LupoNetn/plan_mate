@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const {loading,loginUser} = useAuth()
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -28,6 +30,7 @@ const Login = () => {
         email: "",
         password: "",
       });
+      navigate('/')
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong, please try again later!");

@@ -4,16 +4,17 @@ import {
   Command,
   Search,
   Share2,
-  User,
 } from "lucide-react";
+import { useAuthStore } from "../stores/authStore";
 
 const Navbar = () => {
   const main = "Main Menu";
   const current = "Dashboard";
+  const user = useAuthStore((state) => state.user)
 
   return (
     <nav className="w-full bg-gray-200 border-2 border-gray-300 fixed top-0 left-0 right-0 z-50 shadow-sm">
-      <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-5">
+      <div className="spacing">
         <div className="flex items-center justify-between gap-3 sm:gap-4 md:gap-6">
           {/* Left Section */}
           <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 min-w-0">
@@ -73,8 +74,8 @@ const Navbar = () => {
             </button>
 
             {/* User Profile */}
-            <button className="bg-white p-2 rounded-md shrink-0 text-gray-600 hover:text-gray-900">
-              <User size={18} className="sm:size-5" />
+            <button className="bg-white p-2 rounded-full h-10 w-10 flex items-center justify-center shrink-0 text-gray-600 hover:text-gray-900">
+              {user?.name.at(0)}
             </button>
           </div>
         </div>
