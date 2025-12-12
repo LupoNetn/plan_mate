@@ -1,15 +1,18 @@
-import { LayoutDashboard, CheckSquare, Inbox, BarChart3, Users, PlusIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 import { NavLink } from "react-router"
+import { getNavLinks } from "../constants/constants"
 
-const NAV_Links = [
-    {title:'Dashboard',path:'/', icon: LayoutDashboard},
-    {title:'My Tasks',path:'/my-tasks', icon: CheckSquare},
-    {title:'Inbox',path:'/inbox', icon: Inbox},
-    {title:'Analytics',path:'/analytics', icon: BarChart3},
-    {title:'Assigned To Me',path:'/assigned-to-me', icon: Users},
-]
+// const NAV_Links = [
+//     {title:'Dashboard',path:'/workspace/${id}', icon: LayoutDashboard},
+//     {title:'My projects',path:'/my-tasks', icon: CheckSquare},
+//     {title:'Team Members',path:'/assigned-to-me', icon: Users},
+//     {title:'Settings',path:'/inbox', icon: Inbox},
+//     {title:'Analytics',path:'/analytics', icon: BarChart3},
+// ]
 
-const Sidebar = () => {
+const Sidebar = ({id}:{id: string}) => {
+  const NAV_Links = getNavLinks(id)
+  console.log(id)
   return (
     <>
      <div>

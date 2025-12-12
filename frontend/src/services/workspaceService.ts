@@ -5,6 +5,16 @@ interface CreateWorkspaceParams {
   description: string;
 }
 
+export interface Workspace {
+  id: string;
+  name: string;
+  projects: {
+    id: string;
+    name: string;
+    tasks: { id: string; title: string }[];
+  }[];
+}
+
 export const fetchWorkspaces = async () => {
   try {
     const response = await api.get("/workspaces");
@@ -14,6 +24,18 @@ export const fetchWorkspaces = async () => {
     throw error;
   }
 };
+
+
+export const fetchWorkspace = async (id: string): Promise<Workspace> => {
+  try {
+    const res = await api.get<{ workspace: Workspace }>(`/workspaces/${id}`);
+    return res.data.workspace;
+  } catch (error) {
+    console.error("Failed to fetch workspace:", error);
+    throw error;
+  }
+};
+
 
 export const createWorkspace = async ({
   name,

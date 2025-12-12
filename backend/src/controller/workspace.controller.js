@@ -51,3 +51,35 @@ export const fetchAllMyWorkspaces = async (req, res) => {
     });
   }
 };
+
+export const fetchOneWorkspace = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: 'Workspace id is required' });
+    }
+
+    const workspace = await db.workspace.findUnique({
+      where: { id },
+      include: {
+        projects: {
+          include: {
+            tasks: true
+          }
+        }
+      }
+    });
+
+    if (!workspace) {
+      return res.status(404).json({ message: 'Workspace cannot be found' });
+    }
+
+    // Success response
+    return res.status(200).json({ workspace });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Something went wrong' });
+  }
+};

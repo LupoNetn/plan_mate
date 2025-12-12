@@ -32,14 +32,19 @@ const App = () => {
          <Route index element={<Signup />}/>
          <Route path='login' element={<Login />} />
         </Route>
-        <Route path='/create-workspace' element={<CreateWorkspace />}/>
-        <Route path='/' element={<AppLayout />}>
-          <Route index element={<Dashboard />}/>
-          <Route path='/my-tasks' element={<MyTasks />} />
+
+        <Route path='/'>
+          <Route path='/create-workspace' element={<CreateWorkspace />}/>
+          <Route path='/workspace/:id' element={<AppLayout />}>
+            <Route index element={<Dashboard />}/>
+          </Route>
+        </Route>
+        {/* <Route path='/workspace/:workspaceId' element={<AppLayout />}>
+          {/* <Route path='/my-tasks' element={<MyTasks />} />
           <Route path='/inbox' element={<Inbox />}/>
           <Route path='/analytics' element={<Analytics />}/>
-          <Route path='/assigned-to-me' element={<AssignedToMe />} />
-        </Route>
+          <Route path='/assigned-to-me' element={<AssignedToMe />} /> */}
+        
       </Routes>
     </BrowserRouter>
    </>

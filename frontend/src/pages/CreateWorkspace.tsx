@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Link, Navigate } from "react-router";
 import Navbar from "../components/Navbar";
 import { useAuthStore } from "../stores/authStore";
 import { Loader2, Plus } from "lucide-react";
@@ -77,9 +77,9 @@ const CreateWorkspace = () => {
         {!loading && (
           <div className="flex flex-wrap gap-6">
             {workspace.map((space: any) => (
-              <button
+             <Link to={`/workspace/${space.id}`} className="w-full sm:w-[250px] sm:h-[200px] h-[200px] bg-gray-100 border border-gray-200 rounded-xl p-4 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-1">
+               <button
                 key={space.id}
-                className="w-full sm:w-[250px] sm:h-[200px] h-[200px] bg-gray-100 border border-gray-200 rounded-xl p-4 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-1"
               >
                 <div className="text-left pl-2">
                   <h2 className="text-lg font-semibold text-gray-800 mb-1">
@@ -90,6 +90,7 @@ const CreateWorkspace = () => {
                   </p>
                 </div>
               </button>
+             </Link>
             ))}
 
             {/* Add Workspace */}

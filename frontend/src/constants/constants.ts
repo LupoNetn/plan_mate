@@ -1,5 +1,15 @@
 import type { ComponentType, SVGProps } from "react";
-import { ClipboardList, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import {
+  ClipboardList,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  LayoutDashboard,
+  CheckSquare,
+  Users,
+  Inbox,
+  BarChart3,
+} from "lucide-react";
 
 // Demo data for Dashboard overview
 
@@ -175,3 +185,32 @@ export default {
   barChartUpcoming,
   timelineTasks,
 };
+
+//Workspace sidebar navigation links
+export const getNavLinks = (workspaceId: string) => [
+  {
+    title: "Dashboard",
+    path: `/workspace/${workspaceId}`,
+    icon: LayoutDashboard,
+  },
+  {
+    title: "My Projects",
+    path: `/workspace/${workspaceId}/projects`,
+    icon: CheckSquare,
+  },
+  {
+    title: "Team Members",
+    path: `/workspace/${workspaceId}/team`,
+    icon: Users,
+  },
+  {
+    title: "Settings",
+    path: `/workspace/${workspaceId}/settings`,
+    icon: Inbox,
+  },
+  {
+    title: "Analytics",
+    path: `/workspace/${workspaceId}/analytics`,
+    icon: BarChart3,
+  },
+];

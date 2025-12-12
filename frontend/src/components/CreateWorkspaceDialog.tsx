@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Loader2, Plus, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { createWorkspace } from "../services/workspaceService";
+import useWorkspaceStore from "../stores/workspaceStore";
 
 interface CreateWorkspaceDialogProps {
   closeDialog: () => void;
@@ -12,6 +13,9 @@ const CreateWorkspaceDialog = ({ closeDialog }: CreateWorkspaceDialogProps) => {
     name: "",
     description: "",
   });
+
+  const currentSpace = useWorkspaceStore((state) => state.currentWorkspace)
+  console.log('f-d',currentSpace)
 
   const [loading, setLoading] = useState(false);
 

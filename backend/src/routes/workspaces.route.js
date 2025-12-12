@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { createNewWorkspace,fetchAllMyWorkspaces } from "../controller/workspace.controller";
+import {
+  createNewWorkspace,
+  fetchAllMyWorkspaces,
+  fetchOneWorkspace,
+} from "../controller/workspace.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-const router = Router()
+const router = Router();
 
-router.post('/', authMiddleware, createNewWorkspace)
-router.get('/',authMiddleware,fetchAllMyWorkspaces)
+router.get("/:id", authMiddleware, fetchOneWorkspace);
+router.post("/", authMiddleware, createNewWorkspace);
+router.get("/", authMiddleware, fetchAllMyWorkspaces);
 
-export default router
+export default router;
